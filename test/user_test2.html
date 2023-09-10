@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <script src="https://cdn.socket.io/4.3.2/socket.io.min.js" integrity="sha384-KAZ4DtjNhLChOB/hxXuKqhMLYvx3b5MlT55xPEiNmREKRzeEm+RVPlTnAn0ajQNs" crossorigin="anonymous"></script>
+    <script>
+      const url = 'http://localhost:4006';
+	   const token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidGVzdDIiLCJpZCI6MiwiaWF0IjoxNjk0MzIzMTQ3LCJleHAiOjE2OTQ0MDk1NDd9.07A_V8kZYIeSnRl-Wx93HDMgKce0rRndJYhvCuQ_teY';
+	   const roomId =1;
+	   const socket = io(url, {
+		query: { token }
+	  });
+	  
+      socket.on('connect', function() {
+        console.log('Connected');
+
+		socket.emit('joinRoom', {"roomId": roomId});
+		socket.emit('sendMessage', {"roomId": roomId, "text": "hello us1 (2)"});
+		//socket.emit('sendMessage', {"roomId": roomId, "text": "hello us1 edit 14", "id": 4});
+        socket.emit('identity', 0, response =>
+          console.log('Identity:', response),
+        );
+      });
+      socket.on('events', function(data) {
+        console.log('event', data);
+      });
+	  socket.on('joinedRoom', function(data) {
+        console.log('joinedRoom', data);
+      });
+	  socket.on('message', function(data) {
+        console.log('message', data);
+      });
+	  socket.on('messageEdited', function(data) {
+        console.log('messageEdited', data);
+      });
+	  
+	   socket.on('userJoined', function(data) {
+        console.log('userJoined', data);
+      });
+	  
+      socket.on('exception', function(data) {
+        console.log('event', data);
+      });
+      socket.on('disconnect', function() {
+        console.log('Disconnected');
+      });
+	  
+	  
+    </script>
+  </head>
+
+  <body></body>
+</html>
