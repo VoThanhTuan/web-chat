@@ -59,7 +59,7 @@ After starting application, you can use swagger doc to test(i use it instead of 
 
 Example: http://localhost:4000/api-docs
 
-Here the list of API:
+Here is the list of APIs:
 1. /api/v1/users
     - Method: Post
     - Create a nickname if not exist and login into system
