@@ -55,7 +55,8 @@ The default port:
  - Websocket port: 4006
 
 ## API Doc
-After start application, you can use swagger doc to test(i use it instead of postman)
+After starting application, you can use swagger doc to test(i use it instead of postman)
+
 Example: http://localhost:4000/api-docs
 
 Here the list of API:
