@@ -2,9 +2,9 @@ import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { UserController } from './user.controller'
 import { UserService } from './user.service'
-import { User } from './../models/entities/user.entity'
-import { AuthModule } from './../auth/auth.module'
-import { EXPIRES_TIME, JWT_SECRET_KEY } from '../config/constants'
+import { User } from '../../models/entities/user.entity'
+import { AuthModule } from '../../auth/auth.module'
+import { EXPIRES_TIME, JWT_SECRET_KEY } from '../../config/constants'
 import { JwtModule } from '@nestjs/jwt'
 @Module({
   imports: [

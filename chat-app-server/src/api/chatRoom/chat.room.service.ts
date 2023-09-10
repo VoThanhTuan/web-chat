@@ -1,10 +1,10 @@
 import { Injectable, NotFoundException, UnauthorizedException, BadRequestException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { Conversation } from '../models/entities/conversation.entity'
-import { Message } from '../models/entities/message.entity'
-import { User } from '../models/entities/user.entity'
-import { CreateRoomDto } from '../models/dto/CreateRoom.dto'
+import { Conversation } from '../../models/entities/conversation.entity'
+import { Message } from '../../models/entities/message.entity'
+import { User } from '../../models/entities/user.entity'
+import { CreateRoomDto } from '../../models/dto/CreateRoom.dto'
 import { UserService } from '../user/user.service'
 
 @Injectable()

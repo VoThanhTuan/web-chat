@@ -1,8 +1,8 @@
 import { Controller, Post, Body, Logger } from '@nestjs/common'
 import { UserService } from './user.service'
-import { CreateUserDto } from './../models/dto/CreateUser.dto'
+import { CreateUserDto } from '../../models/dto/CreateUser.dto'
 import { ApiBody, ApiOperation } from '@nestjs/swagger'
-import { AuthPayload } from './../auth/interfaces/auth-payload.interface'
+import { AuthPayload } from '../../auth/interfaces/auth-payload.interface'
 import * as moment from 'moment'
 import { JwtService } from '@nestjs/jwt'
 
