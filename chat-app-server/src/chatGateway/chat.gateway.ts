@@ -64,7 +64,6 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
       await this.conversationService.save(chatRoom)
     }
     client.join(roomId.toString())
-    this.server.to(roomId.toString()).emit('joinedRoom', roomId)
 
     // Notify other participants in the room
     this.server.to(roomId.toString()).emit('userJoined', {
