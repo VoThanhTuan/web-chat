@@ -1,11 +1,11 @@
 import { Controller, Body, Post, Param, Get, Delete, UseGuards, Req, Query, Logger } from '@nestjs/common'
 import { ChatRoomService } from './chat.room.service'
-import { MessageService } from './../message/message.service'
-import { Conversation } from '../models/entities/conversation.entity'
-import { CreateRoomDto } from '../models/dto/CreateRoom.dto'
+import { MessageService } from '../message/message.service'
+import { Conversation } from '../../models/entities/conversation.entity'
+import { CreateRoomDto } from '../../models/dto/CreateRoom.dto'
 import { ApiBody, ApiOperation, ApiBearerAuth } from '@nestjs/swagger'
-import { User } from '../models/entities/user.entity'
-import { AuthenticationGuard } from './../auth/guards/auth.guard'
+import { User } from '../../models/entities/user.entity'
+import { AuthenticationGuard } from '../../auth/guards/auth.guard'
 
 @UseGuards(AuthenticationGuard)
 @ApiBearerAuth()

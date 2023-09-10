@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { User } from './../models/entities/user.entity'
-import { CreateUserDto } from './../models/dto/CreateUser.dto'
+import { User } from '../../models/entities/user.entity'
+import { CreateUserDto } from '../../models/dto/CreateUser.dto'
 import { JwtService } from '@nestjs/jwt'
 
 @Injectable()
