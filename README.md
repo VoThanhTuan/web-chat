@@ -3,7 +3,7 @@
 Requirement:
 >please refer to https://gist.github.com/gerukin/3233e6cfeb21fc56015ad6079d9e8743?fbclid=IwAR2Q2_-nInrwAptBzqh0PCbDzmWlUTv84jiykwJq4EncMKo0kGvOdYzciNs
 
-And here is my choise:
+And here is my choice:
 
 **Client side**:
  I skip it 
