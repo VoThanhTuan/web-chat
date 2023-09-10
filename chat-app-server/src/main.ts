@@ -4,9 +4,11 @@ import { HttpExceptionFilter } from './filters/http-exception.filter'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { RequestMethod, ValidationPipe, Logger } from '@nestjs/common'
 const PORT = process.env['SERVICE_PORT'] || 4000
-Logger.log('Service PORT: ', PORT)
+Logger.log('SERVICE PORT: ', PORT)
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule)
+  const app = await NestFactory.create(AppModule, {
+    logger: ['log', 'debug', 'error', 'warn'],
+  })
   app.useGlobalFilters(new HttpExceptionFilter())
   app.useGlobalPipes(new ValidationPipe())
   app.setGlobalPrefix('api/v1', {

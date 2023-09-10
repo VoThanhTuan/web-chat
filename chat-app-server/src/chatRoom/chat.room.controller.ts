@@ -46,7 +46,7 @@ export class ChatRoomController {
   }
 
   @ApiOperation({
-    summary: 'Delete a chat room by id',
+    summary: 'Delete a chat room by id which they created',
   })
   @Delete(':id')
   async delete(@Req() req: any, @Param('id') id: string): Promise<void> {

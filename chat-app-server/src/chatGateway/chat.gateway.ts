@@ -15,7 +15,7 @@ import { CreateUpdateMessage } from './../models/dto/CreateUpdateMessage'
 import { NotFoundException, Logger } from '@nestjs/common'
 
 const WEB_SOCKET_PORT = +process.env['WEB_SOCKET_PORT'] || 4006
-Logger.log('SERVICE_PORT: ', WEB_SOCKET_PORT)
+Logger.log('WEB_SOCKET_PORT: ', WEB_SOCKET_PORT)
 
 @WebSocketGateway(WEB_SOCKET_PORT, { cors: true })
 export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {

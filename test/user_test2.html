@@ -12,9 +12,9 @@
       socket.on('connect', function() {
         console.log('Connected');
 
-		socket.emit('joinRoom', {"roomId": roomId, "userId": userId});
-		socket.emit('sendMessage', {"roomId": roomId, "userId": userId, "text": "hello us1 (2)"});
-		//socket.emit('sendMessage', {"roomId": roomId, "userId": userId, "text": "hello us1 edit 14", "id": 4});
+		socket.emit('joinRoom', {"roomId": roomId});
+		socket.emit('sendMessage', {"roomId": roomId, "text": "hello us1 (2)"});
+		//socket.emit('sendMessage', {"roomId": roomId, "text": "hello us1 edit 14", "id": 4});
         socket.emit('identity', 0, response =>
           console.log('Identity:', response),
         );

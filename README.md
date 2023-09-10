@@ -24,7 +24,7 @@ Backend Option A:
 ## Installation
 
 ```bash
-$ cd web_chat
+$ cd web-chat
 $ docker-compose up -d
 ```
 The database name will be created with the name is: **test**
@@ -41,6 +41,9 @@ $ docker-compose up -d
 ## Enviroment
 The environment is configurated in /chat-app-server/.env file. please read and change it if needed or add/update it in docker-compse.yml file
 
+The default port:
+ - API port: 4000
+ - Websocket port: 4006
 
 ## API Doc
 After start application, you can use swagger doc to test(i use it instead of postman)
