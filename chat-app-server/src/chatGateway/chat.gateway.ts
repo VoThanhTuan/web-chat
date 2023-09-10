@@ -10,12 +10,13 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { Message } from '../models/entities/message.entity'
 import { UserService } from '../user/user.service'
-import { ConversationService } from '../chatRoom/chat.room.service'
+import { ChatRoomService } from '../chatRoom/chat.room.service'
 import { User } from '../models/entities/user.entity'
 import { CreateUpdateMessage } from './../models/dto/CreateUpdateMessage'
 import { NotFoundException } from '@nestjs/common'
 
 const WEB_SOCKET_PORT = +process.env['WEB_SOCKET_PORT'] || 4006;
+console.log("SERVICE_PORT: ", WEB_SOCKET_PORT);
 
 @WebSocketGateway(WEB_SOCKET_PORT, { cors: true })
 export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
@@ -25,7 +26,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     @InjectRepository(Message) // Inject the Message repository
     private readonly messageRepository: Repository<Message>,
     private readonly userService: UserService,
-    private readonly conversationService: ConversationService,
+    private readonly conversationService: ChatRoomService,
   ) {}
 
   async handleConnection(client: Socket) {

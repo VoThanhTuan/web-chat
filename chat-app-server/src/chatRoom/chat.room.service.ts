@@ -8,7 +8,7 @@ import { CreateRoomDto } from '../models/dto/CreateRoom.dto'
 import { UserService } from '../user/user.service'
 
 @Injectable()
-export class ConversationService {
+export class ChatRoomService {
   constructor(
     @InjectRepository(Conversation)
     private readonly conversationRepository: Repository<Conversation>,
@@ -17,14 +17,14 @@ export class ConversationService {
     private readonly userService: UserService,
   ) {}
 
-  async createConversation(createRoomDto: CreateRoomDto, userId: string): Promise<Conversation> {
+  async createChatRoom(createRoomDto: CreateRoomDto, userId: string): Promise<Conversation> {
     const { name } = createRoomDto
     const user = await this.userService.findOne(+userId)
     if (!user) {
       throw new NotFoundException('User does not exist')
     }
 
-    const existedConversation = this.conversationRepository.findOne({
+    const existedConversation = await this.conversationRepository.findOne({
       where: { name },
     })
     // check chat room exited or not
