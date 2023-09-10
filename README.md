@@ -21,17 +21,26 @@ Backend Option A:
   - TypeORM
   - Socket.io
 
+The following are a few reasons why I chose NestJS for this project:
+
+-  TypeScript Support
+-  Modular Architecture: It uses decorators and modules to create clean and maintainable code by separating concerns into modules, controllers, services, and more. This helps with code scalability and maintainability.You can easily break down your application into smaller, manageable parts and scale them independently.
+-  Websocket Support
+-  Dependency Injection: NestJS utilizes a powerful dependency injection system that promotes reusability and testability. This design pattern allows you to inject dependencies into your components, making it easier to manage and test your application.
+- Middleware and Interceptors: NestJS provides a robust middleware and interceptor system, allowing you to add cross-cutting concerns to your application, such as logging, authentication, and error handling, in a modular and reusable way.
+...
+
 ## Installation
 
 ```bash
 $ cd web-chat
 $ docker-compose up -d
 ```
-The database name will be created with the name is: **test**
+After running, the database will be automatically  created with the name: **"test"**.
 
 * Note
- After running, if database is not create, you can 
-1. Run this command 
+ if database is not created, you can 
+1. Run this command and try it again
 ```bash
 $ docker-compose down -v 
 $ docker-compose up -d
