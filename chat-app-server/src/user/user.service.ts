@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common'
+import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { User } from './../models/entities/user.entity'
@@ -50,5 +50,13 @@ export class UserService {
     } catch (ex) {
       throw new NotFoundException('User not found')
     }
+  }
+
+  getUserIdFromToken(authToken: any): number {
+    const decoded = this.jwtService.verify(authToken)
+    if (!decoded.id) {
+      throw new BadRequestException('Invalid authorize token')
+    }
+    return decoded.id
   }
 }

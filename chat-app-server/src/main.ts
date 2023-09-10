@@ -2,9 +2,9 @@ import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
 import { HttpExceptionFilter } from './filters/http-exception.filter'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
-import { RequestMethod, ValidationPipe } from '@nestjs/common'
+import { RequestMethod, ValidationPipe, Logger } from '@nestjs/common'
 const PORT = process.env['SERVICE_PORT'] || 4000
-console.log('Service PORT: ', PORT)
+Logger.log('Service PORT: ', PORT)
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
   app.useGlobalFilters(new HttpExceptionFilter())

@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common'
+import { Controller, Post, Body, Logger } from '@nestjs/common'
 import { UserService } from './user.service'
 import { CreateUserDto } from './../models/dto/CreateUser.dto'
 import { ApiBody, ApiOperation } from '@nestjs/swagger'
@@ -29,7 +29,8 @@ export class UserController {
       required: ['nickname'],
     },
   })
-  async createUser(@Body() createUserDto: CreateUserDto) {
+  async login(@Body() createUserDto: CreateUserDto) {
+    Logger.log(`login with nickname=[${createUserDto.nickname}]`)
     const user = await this.userService.createUser(createUserDto)
 
     const payload: AuthPayload = {

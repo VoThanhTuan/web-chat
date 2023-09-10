@@ -8,8 +8,7 @@ import { ChatGatewayModule } from './chatGateway/chat.gateway.module' // Import 
 import { ConfigModule } from '@nestjs/config'
 import databaseConfig from './config/database.config'
 import { AuthModule } from './auth/auth.module'
-import { MessageService } from './message/message.service';
-import { MessageModule } from './message/message.module';
+import { MessageModule } from './message/message.module'
 
 @Module({
   imports: [

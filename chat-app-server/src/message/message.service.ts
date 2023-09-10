@@ -15,15 +15,25 @@ export class MessageService {
     page: number = 1,
     pageSize: number = 20,
   ): Promise<[Message[], number]> {
-    const skip = (page - 1) * pageSize;
+    const skip = (page - 1) * pageSize
 
     const [messages, totalMessages] = await this.messageRepository.findAndCount({
       where: { conversation: { id: conversationId } }, // Use the relation
       order: { createdAt: 'DESC' },
       skip,
       take: pageSize,
-    });
+    })
 
-    return [messages, totalMessages];
+    return [messages, totalMessages]
+  }
+
+  async findOne(id: number): Promise<Message> {
+    return this.messageRepository.findOneBy({
+      id: id,
+    })
+  }
+
+  async saveMessage(messageToUpdate: Message): Promise<Message> {
+    return this.messageRepository.save(messageToUpdate)
   }
 }

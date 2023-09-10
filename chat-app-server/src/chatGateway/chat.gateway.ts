@@ -6,25 +6,23 @@ import {
   OnGatewayDisconnect,
 } from '@nestjs/websockets'
 import { Server, Socket } from 'socket.io'
-import { InjectRepository } from '@nestjs/typeorm'
-import { Repository } from 'typeorm'
 import { Message } from '../models/entities/message.entity'
 import { UserService } from '../user/user.service'
 import { ChatRoomService } from '../chatRoom/chat.room.service'
+import { MessageService } from '../message/message.service'
 import { User } from '../models/entities/user.entity'
 import { CreateUpdateMessage } from './../models/dto/CreateUpdateMessage'
-import { NotFoundException } from '@nestjs/common'
+import { NotFoundException, Logger } from '@nestjs/common'
 
-const WEB_SOCKET_PORT = +process.env['WEB_SOCKET_PORT'] || 4006;
-console.log("SERVICE_PORT: ", WEB_SOCKET_PORT);
+const WEB_SOCKET_PORT = +process.env['WEB_SOCKET_PORT'] || 4006
+Logger.log('SERVICE_PORT: ', WEB_SOCKET_PORT)
 
 @WebSocketGateway(WEB_SOCKET_PORT, { cors: true })
 export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer() server: Server
 
   constructor(
-    @InjectRepository(Message) // Inject the Message repository
-    private readonly messageRepository: Repository<Message>,
+    private readonly messageService: MessageService,
     private readonly userService: UserService,
     private readonly conversationService: ChatRoomService,
   ) {}
@@ -33,19 +31,23 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     const user = await this.getDataUserFromToken(client)
     user.isConnected = true
     await this.userService.update(user)
-    console.log(`Client connected: ${client.id}`)
+    Logger.log(`Client connected: ${client.id}`)
   }
 
   async handleDisconnect(client: Socket) {
     const user = await this.getDataUserFromToken(client)
     user.isConnected = false
     await this.userService.update(user)
-    console.log(`Client disconnected: ${client.id}`)
+    Logger.log(`Client disconnected: ${client.id}`)
   }
 
   @SubscribeMessage('joinRoom')
   async handleJoinRoom(client: Socket, payload: any) {
-    const { roomId, userId } = payload
+    const { roomId } = payload
+    // Get User Id from token
+    const userId = this.getUserIdFromToken(client)
+    Logger.debug('Handle event joinRoom:')
+    Logger.debug(`userId=[${userId}] join roomId=[${roomId}]`)
     const user = await this.userService.findOne(userId)
     if (!user) {
       return
@@ -74,7 +76,10 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   @SubscribeMessage('sendMessage')
   async handleSendMessage(client: Socket, payload: CreateUpdateMessage) {
-    const { roomId, text, userId, id: messageId } = payload
+    Logger.debug('Handle event sendMessage:')
+    const { roomId, text, id: messageId } = payload
+    const userId = this.getUserIdFromToken(client)
+    Logger.debug(`userId=[${userId}] send message=[${text}] to roomId=[${roomId}]`)
     const user = await this.userService.findOne(userId) // Assuming you have a user ID associated with the socket
 
     if (!user) {
@@ -88,16 +93,14 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     }
 
     if (messageId) {
-      let messageToUpdate = await this.messageRepository.findOneBy({
-        id: messageId,
-      })
+      let messageToUpdate = await this.messageService.findOne(messageId)
       if (!messageToUpdate) {
         throw new NotFoundException(`Message id=[${messageId}] not found`)
       }
       // Update the message text and set 'edited' to true
       messageToUpdate.text = text
       messageToUpdate.edited = true
-      await this.messageRepository.save(messageToUpdate)
+      await this.messageService.saveMessage(messageToUpdate)
 
       // Emit the edited message to all participants in the chat room
       this.server.to(roomId.toString()).emit('messageEdited', {
@@ -111,7 +114,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
       message.user = user
       message.conversation = chatRoom
       message.text = text
-      await this.messageRepository.save(message)
+      await this.messageService.saveMessage(message)
 
       // Emit the new message to all participants in the chat room
       this.server.to(roomId.toString()).emit('message', {
@@ -125,5 +128,10 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   async getDataUserFromToken(client: Socket): Promise<User> {
     const authToken: any = client.handshake?.query?.token
     return await this.userService.getDataUserFromToken(authToken)
+  }
+
+  getUserIdFromToken(client: Socket): number {
+    const authToken: any = client.handshake?.query?.token
+    return this.userService.getUserIdFromToken(authToken)
   }
 }

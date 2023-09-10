@@ -1,4 +1,4 @@
-import { Controller, Body, Post, Param, Get, Delete, UseGuards, Req, Query } from '@nestjs/common'
+import { Controller, Body, Post, Param, Get, Delete, UseGuards, Req, Query, Logger } from '@nestjs/common'
 import { ChatRoomService } from './chat.room.service'
 import { MessageService } from './../message/message.service'
 import { Conversation } from '../models/entities/conversation.entity'
@@ -33,7 +33,7 @@ export class ChatRoomController {
   })
   async create(@Req() req: any, @Body() createRoomDto: CreateRoomDto): Promise<Conversation> {
     const { id: userId } = req.user
-    console.log('req user', req.user)
+    Logger.debug(`Creat an new room name=[${createRoomDto.name}]`)
     return this.chatRoomService.createChatRoom(createRoomDto, userId)
   }
 
@@ -71,6 +71,7 @@ export class ChatRoomController {
     @Query('page') page: number = 1,
     @Query('pageSize') pageSize: number = 20,
   ) {
+    Logger.debug(`Get messages by conversationId=[${conversationId}] and page=[${page}] and pageSize=[${pageSize}]`)
     const [messages, totalMessages] = await this.messageService.getMessagesInConversation(
       conversationId,
       page,

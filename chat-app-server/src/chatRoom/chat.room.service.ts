@@ -66,7 +66,6 @@ export class ChatRoomService {
     if (!chatRoom) {
       throw new NotFoundException(`Chat room id=[${id}] does not found.`)
     }
-    console.log(chatRoom.createdBy)
     if (!chatRoom.createdBy || chatRoom.createdBy.toString() != userId) {
       throw new UnauthorizedException(`You don't have permission to delete room id=[${id}].`)
     }
