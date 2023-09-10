@@ -4,6 +4,7 @@ Requirement:
 >please refer to https://gist.github.com/gerukin/3233e6cfeb21fc56015ad6079d9e8743?fbclid=IwAR2Q2_-nInrwAptBzqh0PCbDzmWlUTv84jiykwJq4EncMKo0kGvOdYzciNs
 
 And here is my choise:
+
 **Client side**:
  I skip it 
  
@@ -38,12 +39,13 @@ $ docker-compose up -d
 2. Or open set_database/init.sql, copy and run sql statement
 
 ## Enviroment
-The environment is configurated in /chat-app-server/.env file. please read and change it if needed or add/update in docker-compse.yml file
+The environment is configurated in /chat-app-server/.env file. please read and change it if needed or add/update it in docker-compse.yml file
 
 
 ## API Doc
 After start application, you can use swagger doc to test(i use it instead of postman)
 Example: http://localhost:4000/api-docs
+
 Here the list of API:
 1. /api/v1/users
     - Method: Post
